@@ -1,0 +1,45 @@
+<div class="container mt-5">
+    <div class="card p-2">
+        <div class="row">
+            <div class="col-6">
+                <!-- <form #loginForm="ngForm" (ngSubmit)="addProduct(loginForm)">
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>OrderId</mat-label>
+                        <input matInput ngModel name="orderId" id="orderId" placeholder="orderId">
+                        
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>status</mat-label>
+                        <input matInp8977ut ngModel name="status" id="status" placeholder="status">
+                        
+                    </mat-form-field>
+        
+                      <button class="w-100" type="submit" mat-raised-button color="primary">Update Status</button>
+                   
+                </form> -->
+                <form #loginForm="ngForm" (ngSubmit)="addProduct(loginForm)">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select >
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let item of data" [value]="item" [id]="data">{{item}}               
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select >
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let item of data" [value]="item" [id]="status">{{item}}               
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="w-100" type="submit" mat-raised-button color="primary">Update Status</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
