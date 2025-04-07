@@ -6,5 +6,9 @@ export interface Product {
     productDescription: String,
     productDiscountedPrice: number,
     productActualPrice: number,
-    productImages: FileHandel[]
+    productQuantity: number,
+    sellerName: String,
+    sellerEmailId: String,
+    productImages: FileHandel[],
+    couponCode : String
 }

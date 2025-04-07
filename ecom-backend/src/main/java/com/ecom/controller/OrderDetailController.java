@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,15 +30,16 @@ public class OrderDetailController {
 	
 	@PreAuthorize("hasRole('User')")
 	@PostMapping({"/placeOrder/{isSingleProductCheckout}"})
-	public void placeOrder(@PathVariable(name= "isSingleProductCheckout") boolean isSingleProductCheckout, @RequestBody OrderInput orderInput) {
-		orderDetailService.placeOrder(orderInput, isSingleProductCheckout);
+	public String placeOrder(@PathVariable(name= "isSingleProductCheckout") boolean isSingleProductCheckout, @RequestBody OrderInput orderInput) {
+		return orderDetailService.placeOrder(orderInput, isSingleProductCheckout);
 		
 	}
 	
-	@PreAuthorize("hasRole('User')")
+	@PreAuthorize("hasRole('User') || hasRole('Seller')")
 	@GetMapping({"/getOrderDetails"})
 	public List<OrderDetail> getOrderDetails() {
-		return orderDetailService.getOrderDetails();
+		return orderDetailService.
+				getOrderDetails();
 	}
 	
 	
@@ -77,4 +79,37 @@ public class OrderDetailController {
 			return null;
 		}
 	}
+	
+	@PreAuthorize("hasRole('User') || hasRole('Admin')")
+	@GetMapping({"/cancelOrder/{orderId}"})
+	public void cancelOrder(@PathVariable(
+			"orderId") Integer orderId) {
+		orderDetailService.cancelOrder(orderId);
+	}
+	
+	@PreAuthorize("hasRole('Seller') || hasRole('User')")
+	@GetMapping({"/changeOrderStatus/{orderId}/{status}"})
+	public void changeOrderStatus(@PathVariable(
+			"orderId") Integer orderId,@PathVariable(
+					"status") String status) {
+		orderDetailService.changeOrderStatus(orderId,status);
+	}
+	
+	
+	@PreAuthorize("hasRole('User') || hasRole('Admin') || hasRole('Seller')")
+	@GetMapping({"/refundOrder/{orderId}"})
+	public void refundOrder(@PathVariable(
+			"orderId") Integer orderId) {
+		orderDetailService.refundOrder(orderId);
+	}
+	//@PreAuthorize("hasRole('User') || hasRole('Admin') || hasRole('Seller')")
+	@GetMapping({"/applyCouponCode/{couponCode}/{productId}"})
+	public Double applyCouponCode(@PathVariable(
+			"couponCode") String couponCode,@PathVariable(
+					"productId") Integer productId) {
+		return orderDetailService.applyCouponCode(couponCode,productId);
+	}
+	
+	
+	
 }

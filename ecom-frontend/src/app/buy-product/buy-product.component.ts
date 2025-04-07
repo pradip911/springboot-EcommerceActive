@@ -13,6 +13,8 @@ import { ProductService } from '../_services/product.service';
 export class BuyProductComponent implements OnInit {
 
   isSingleProductCheckout : string = "";
+  priceReducerDerivation: string="";
+  alertMessage : string ="";
   productDetails : Product[]=[];
   orderDetails: OrderDetails={
     fullName : '',
@@ -29,6 +31,9 @@ export class BuyProductComponent implements OnInit {
     this.productDetails= this.activatedRoute.snapshot.data['productDetails'];
 
     this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
+    this.priceReducerDerivation = this.activatedRoute.snapshot.paramMap.get("priceReducerDerivation");
+    //this.activatedRoute.snapshot.
+
     this.productDetails.forEach(
       x => this.orderDetails.orderProductQuantityList.push(
         {productId: x.productId, quantity: 1
@@ -43,6 +48,13 @@ export class BuyProductComponent implements OnInit {
     this.productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
       (resp) => {
         console.log(resp);
+        const result=resp;
+        console.log(result);
+        if(resp === 'Order could not be placed because availavle quantity is 0'){
+          console.log(result+"Data");
+          this.alertMessage='Order Can not be placed';
+          orderForm.reset();
+        }
         orderForm.reset();
         this.router.navigate(["/orderConfirm"])
       },
@@ -75,12 +87,17 @@ export class BuyProductComponent implements OnInit {
     )[0].quantity=q;
   }
 
-  getCalculatedGrandTotal(){
+  getCalculatedGrandTotal(priceReducerDerivation){
     let grandTotal = 0;
+    
     this.orderDetails.orderProductQuantityList.forEach(
       (productQuantity) => {
         const price=this.productDetails.filter(product => product.productId === productQuantity.productId)[0].productDiscountedPrice
-        grandTotal+=price*productQuantity.quantity;
+        var priceReducerDerivationAmount = parseInt(priceReducerDerivation);
+        const discountprice=productQuantity.quantity*priceReducerDerivationAmount;
+        
+        grandTotal+=(price*productQuantity.quantity);
+        grandTotal=grandTotal-discountprice;
       }
     );
     return grandTotal;

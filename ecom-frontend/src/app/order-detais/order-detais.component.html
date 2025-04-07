@@ -33,6 +33,16 @@
         <td mat-cell *matCellDef="let element"> {{element.orderStatus}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element"> 
+           
+          <button mat-icon-button color="warn" (click) = "deleteProduct(element.productId)">
+            <mat-icon> CompleteOrder </mat-icon>
+        </button>
+             </td>
+      </ng-container>     
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

@@ -1,6 +1,6 @@
 # E-Commerce
-E-commerce application using Angular as an Front-End and Spring-Boot as an Back-End
-<b>(individual project)<b/>
+E-commerce application using Angular JS as an Front-End and Spring-Boot/Microservices as an Back-End with Mysql DB for connection 
+<b>(POC for Client NOobs)<b/>
   
 # Tech-Stack
   ## Front-End

@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
     this.getAllProducts(searchkeyword);
 
   }
+  
 
   public getAllProducts(searchKey: string =""){
     this.productService.getAllProducts(this.pageNumber, searchKey)
@@ -60,6 +61,21 @@ export class HomeComponent implements OnInit {
 
   showProductDetails(productId){
     this.router.navigate(['/productViewDetails' , {productId: productId}]);
+
+  }
+
+
+  addTofavProductDetails(productId){
+    this.productService.addTofavItemDetails(productId).subscribe(
+      (response) => {
+        console.log(response);
+        this.router.navigate(['/myFavItem']);
+
+
+      },(error) => {
+        console.log(error)
+      }
+    )
 
   }
 

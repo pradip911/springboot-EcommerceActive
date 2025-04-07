@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="card" style="padding: 20px;">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Username</mat-label>
+                <input matInput ngModel name="userName" id="userName" placeholder="Username">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>First Name</mat-label>
+                <input matInput ngModel name="userFirstName" id="userFirstName" placeholder="First Name">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Last Name</mat-label>
+                <input matInput ngModel name="userLastName" id="userLastName" placeholder="Last Name">
+               
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Password</mat-label>
+                <input matInput ngModel name="userPassword" id="userPassword" placeholder="Password">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Seller GST</mat-label>
+                <input matInput ngModel name="sellerGst" id="sellerGst" placeholder="sellerGst">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>sellerCountry</mat-label>
+                <input matInput ngModel name="sellerCountry" id="sellerCountry" placeholder="sellerCountry">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>sellerAddress</mat-label>
+                <input matInput ngModel name="sellerAddress" id="sellerAddress" placeholder="sellerAddress">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>sellerContactNo</mat-label>
+                <input matInput ngModel name="sellerContactNo" id="sellerContactNo" placeholder="sellerContactNo">
+                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>sellerEmailId</mat-label>
+                <input matInput ngModel name="sellerEmailId" id="sellerEmailId" placeholder="sellerEmailId">
+                
+            </mat-form-field>
+
+            <div class="text-center">
+                <button type="submit" mat-raised-button color="primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -38,10 +38,20 @@ public class JwtService implements UserDetailsService {
         authenticate(userName, userPassword);
 
         UserDetails userDetails = loadUserByUsername(userName);
+        String message="";
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
         User user = userDao.findById(userName).get();
-        return new JwtResponse(user, newGeneratedToken);
+        boolean isActive=userDao.findByEmailId(user.getEmailId());
+        System.out.println("isActive:"+isActive);
+        if(isActive) {
+        	message="User is Active";
+        }
+        else {
+        	message="User is not Active";
+
+        }
+        return new JwtResponse(user, newGeneratedToken,message);
     }
 
     @Override
@@ -59,6 +69,10 @@ public class JwtService implements UserDetailsService {
         }
     }
 
+    private String getMessage(String username) {
+    	//userDao.findAll();
+    	return null;
+    }
     private Set getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRole().forEach(role -> {

@@ -10,6 +10,7 @@ com\ecom\entity\OrderInput.class
 com\ecom\entity\OrderDetail.class
 com\ecom\configuration\JwtRequestFilter.class
 com\ecom\service\RoleService.class
+com\ecom\util\PDFThymeleafConfiguration.class
 com\ecom\entity\Role.class
 com\ecom\controller\ProductController.class
 com\ecom\dao\RoleDao.class
@@ -18,6 +19,8 @@ com\ecom\service\ProductService.class
 com\ecom\configuration\CorsConfiguration.class
 com\ecom\Ecomm.class
 com\ecom\entity\JwtRequest.class
+com\ecom\entity\OrderStatusUpdateEntity.class
+com\ecom\controller\PDFCreator.class
 com\ecom\entity\ImageModel.class
 com\ecom\controller\JwtController.class
 com\ecom\entity\Product.class

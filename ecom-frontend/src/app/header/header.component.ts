@@ -34,4 +34,11 @@ export class HeaderComponent implements OnInit {
     return this.userAuthService.isUser();
   }
 
+  public isSeller(){
+    return this.userAuthService.isSeller();
+  }
+  public isSupport(){
+    return this.userAuthService.isSupport();
+  }
+
 }

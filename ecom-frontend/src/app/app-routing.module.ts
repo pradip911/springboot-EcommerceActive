@@ -20,6 +20,11 @@ import { UserComponent } from './user/user.component';
 import { AuthGuard } from './_auth/auth.guard';
 import { OrderUpdateComponent } from './order-update/order-update.component';
 import { MyTransactionComponent } from './my-transaction/my-transaction.component';
+import { RegisterSellerComponent } from './register-seller/register-seller.component';
+import { SellerComponent } from './seller/seller.component';
+import { MyOrdersSellerComponent } from './my-order-seller/my-orders-seller.component';
+import { FavProductComponent } from './fav-product/fav-product.component';
+import { CustomerCareComponent } from './customer-care/customer-care.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +37,7 @@ const routes: Routes = [
             product: ProductResolveService
           }},
   { path: 'showProductDetailes' , component: ShowProductDetailesComponent ,  canActivate:[AuthGuard], data:{roles:['Admin']}},
-  { path: 'orderInformation' , component: OrderDetaisComponent ,  canActivate:[AuthGuard], data:{roles:['Admin']}},
+  { path: 'orderInformation' , component: OrderDetaisComponent ,  canActivate:[AuthGuard], data:{roles:['Admin','User','Seller']}},
   { path: 'orderUpdate' , component: OrderUpdateComponent ,  canActivate:[AuthGuard], data:{roles:['Admin']}},
   { path: 'productViewDetails', component: ProductViewDetailsComponent, resolve: { product: ProductResolveService }},
   { path: 'buyProduct' , component: BuyProductComponent, canActivate:[AuthGuard], data:{roles:['User']},
@@ -41,9 +46,20 @@ const routes: Routes = [
   { path: 'cart' , component: CartComponent, canActivate:[AuthGuard], data:{roles:['User']} },
   { path: 'orderConfirm', component: OrderConfirmationComponent ,  canActivate:[AuthGuard], data:{roles:['User']} },
 
-  { path: 'myOrders', component: MyOrdersComponent ,  canActivate:[AuthGuard], data:{roles:['User']} },
+  { path: 'myOrders', component: MyOrdersComponent ,  canActivate:[AuthGuard], data:{roles:['User','Seller']} },
   { path: 'register', component: RegisterComponent },
-  { path: 'myTransaction' , component: MyTransactionComponent ,  canActivate:[AuthGuard], data:{roles:['User']}}
+  { path: 'myTransaction' , component: MyTransactionComponent ,  canActivate:[AuthGuard], data:{roles:['User']}},
+  { path: 'registerSeller' , component: RegisterSellerComponent ,  canActivate:[AuthGuard], data:{roles:['Admin']}},
+  { path: 'seller' , component: SellerComponent ,  canActivate:[AuthGuard], data:{roles:['Seller']}},
+  { path: 'myOrderSeller' , component: MyOrdersSellerComponent ,  canActivate:[AuthGuard], data:{roles:['Seller']}},
+  { path: 'myFavItem' , component: FavProductComponent ,  canActivate:[AuthGuard], data:{roles:['User']}},
+  { path: 'customerCare' , component: CustomerCareComponent ,  canActivate:[AuthGuard], data:{roles:['User']}},
+  { path: 'openTicket' , component: CustomerCareComponent ,  canActivate:[AuthGuard], data:{roles:['Support']}},
+  { path: 'closeTicket' , component: CustomerCareComponent ,  canActivate:[AuthGuard], data:{roles:['Support']}},
+
+
+
+
   
 ];
 

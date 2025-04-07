@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var Reason = /*#__PURE__*/function (Reason) {\n  Reason[\"0\"] = \"Product is not Good\";\n  Reason[Reason[\"Listed\"] = 1] = \"Listed\";\n  Reason[Reason[\"init\"] = 2] = \"init\";\n  return Reason;\n}(Reason || {});","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

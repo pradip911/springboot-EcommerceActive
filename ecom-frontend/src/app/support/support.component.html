@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  
+    <table mat-table [dataSource]="myTicketDetails" class="mat-elevation-z8">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.product_Id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.technician_Id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Contact No">
+            <th mat-header-cell *matHeaderCellDef> Contact No </th>
+            <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.ticket_Id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let
+             element"> {{element.resolution}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>
+               Actions </th>
+            <td mat-cell *matCellDef="let element"> 
+                
+            <!-- <button  mat-icon-button color="primary" (click) = "refundOrder(element.productId)">
+              <mat-icon> Refund </mat-icon>
+          </button> -->
+
+          
+          <input type="text" value="resolution" [(ngModel)]="support.resolution" />
+          <button mat-icon-button color="primary" (click) = "addSupportTicket(element.ticket_Id,resolution)">
+            <mat-icon>check_circle</mat-icon>
+        </button> 
+                 </td>
+          </ng-container>     
+                                 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+</div>

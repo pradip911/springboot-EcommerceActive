@@ -18,6 +18,10 @@ export class UserService {
     return this.httpclient.post(this.PATH_OF_API + '/registerNewUser', registerData);
   }
 
+  public registerSeller(registerData) {
+    return this.httpclient.post(this.PATH_OF_API + '/registerNewSeller', registerData);
+  }
+
   public login(loginData) {
     return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData, {
       headers: this.requestHeader,
@@ -37,21 +41,34 @@ export class UserService {
     });
   }
 
-  public roleMatch(allowedRoles): boolean {
-    let isMatch = false;
-    const userRoles: any = this.userAuthService.getRoles();
+  public forSeller() {
+    return this.httpclient.get(this.PATH_OF_API + '/forSeller', {
+      responseType: 'text',
+    });
+  }
 
+  // public roleMatch(allowedRoles): boolean {
+  //   let isMatch = false;
+  //   const userRoles: any = this.userAuthService.getRoles();
+  //   if (userRoles != null && userRoles) {
+  //     for (let i = 0; i < userRoles.length; i++) {
+  //       for (let j = 0; j < allowedRoles.length; j++) {
+  //         if (userRoles[i].roleName === allowedRoles[j]) {
+  //           isMatch = true;
+  //           return isMatch;
+  //         } else {
+  //           return isMatch;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  public roleMatch(allowedRoles): boolean {
+    let isMatch = true;
+    const userRoles: any = this.userAuthService.getRoles();
     if (userRoles != null && userRoles) {
-      for (let i = 0; i < userRoles.length; i++) {
-        for (let j = 0; j < allowedRoles.length; j++) {
-          if (userRoles[i].roleName === allowedRoles[j]) {
-            isMatch = true;
-            return isMatch;
-          } else {
-            return isMatch;
-          }
-        }
-      }
+      return isMatch
     }
   }
 }

@@ -26,9 +26,13 @@
             </div>
 
             <div class="mt-2">
-               <button type="button" mat-raised-button color="warn" (click)="showProductDetails(p.productId)">View Details</button>
+               <button type="button" mat-raised-button color="warn" *ngIf="p.productQuantity>0"  (click)="showProductDetails(p.productId)">View Details</button>
             </div>
-
+            <div class="mt-2">
+            <button mat-icon-button color="primary" (click)="addTofavProductDetails(p.productId)">
+               <b><mat-icon>favorite_border</mat-icon></b> &nbsp; 
+           </button>
+         </div>
          </div>
       </mat-grid-tile>
       

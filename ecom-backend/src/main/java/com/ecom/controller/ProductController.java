@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ecom.entity.FavItems;
 import com.ecom.entity.ImageModel;
 import com.ecom.entity.OrderDetail;
+import com.ecom.entity.OrderStatusUpdateEntity;
 import com.ecom.entity.Product;
-import com.ecom.service.OrderDetailService;
+import com.ecom.entity.Support;
+import com.ecom.entity.Ticket;
+import com.ecom.service.FavItemsService;
 import com.ecom.service.ProductService;
 
 @RestController
@@ -31,6 +34,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private FavItemsService favItemsService;
 	
 	
 	
@@ -41,10 +47,7 @@ public class ProductController {
 	
 		try {
 			Set<ImageModel> images = uplodImage(file);
-			Set<ImageModel> imagesFilter=images.stream().filter(image->image.getPicByte().length>50000000).collect(Collectors.toSet());
-			if(null!=imagesFilter) {
-				throw new Exception("IMages sizes excends");	
-			}
+			
 			product.setProductImages(images);
 			return productService.addNewProduct(product); 
 		} catch (Exception e) {
@@ -105,5 +108,49 @@ public class ProductController {
 		
 		
 	}
+	/*******fav Items COntroller******/
+	
+	@PreAuthorize("hasRole('User')")
+	@GetMapping({"/addFavItemTocart/{productId}"})
+	public FavItems addFavItemTocart(@PathVariable(name="productId") Integer productId) {
+		return favItemsService.addFavItemTocart(productId);
+		
+	}
+	@PreAuthorize("hasRole('User')")
+	@DeleteMapping({"/deleteFavCartItem/{cartId}"})
+	public void deleteFavCartItem(@PathVariable(name= "cartId") Integer cartId) {
+		favItemsService.deleteFavItems(cartId);		
+	}
+	
+	
+	
+	@PreAuthorize("hasRole('User')")
+	@GetMapping({"/getFavItemCartDetails"})
+	public List<FavItems> getFavItemCartDetails() {
+		return favItemsService.getFavItemCartDetails();
+		
+	}
+	
+	/********fav Items Controller********/
+	@PreAuthorize("hasRole('User')")
+	@PostMapping({"/registerCompain"})
+    public String registerCompplain(@RequestBody Ticket complain) {
+		System.out.println("complain"+complain.getProductId()+"::"+complain.getReason());
+		String message=productService.registerComplainService(complain);
+        return message;
+    }
+	
+	@PreAuthorize("hasRole('Support')")
+	@PostMapping(value = {"/updateTicket"})
+	public String updateOrderStatus(@RequestBody Support supportEntity) {		
+		try {
+			String orderDetails=productService.updateTicket(supportEntity);
+			return orderDetails;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
 
 }

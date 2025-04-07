@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <div class="card p-3">
+        <div class="row">
+            <div class="col-6">
+
+                <form #complainForm="ngForm" (ngSubmit)="login(complainForm)">
+                    
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>ProductId</mat-label>
+                        <input matInput 
+                        placeholder="ProductId"
+                        [(ngModel)]="customerCare.productId"
+                        name="productId" id="productId">
+                    </mat-form-field> 
+
+         
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Reason</mat-label>
+                        <input matInput 
+                        placeholder="reason"
+                        [(ngModel)]="customerCare.reason"
+                        name="reason" id="reason">
+                    </mat-form-field> 
+
+                    <div align="right">
+                        <button type="submit" mat-stroked-button color="primary">Place complain</button>
+                    </div>
+                 </form> 
+
+            </div>
+
+            
+        </div>
+    </div>
+</div>

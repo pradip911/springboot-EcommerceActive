@@ -53,7 +53,8 @@ export class ShowProductDetailesComponent implements OnInit {
         }else{
           this.showLoadMoreProductButton=false;
         }
-        // this.productDetails = resp;
+         this.productDetails = resp;
+        
       }, (error: HttpErrorResponse) => {
         console.log(error);
       }

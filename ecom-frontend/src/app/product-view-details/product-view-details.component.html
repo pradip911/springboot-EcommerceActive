@@ -27,15 +27,30 @@
                     {{product.productDescription}}
                 </div>
 
-                <div class="mt-3">                    
-                   <b>Rs. {{product.productDiscountedPrice}}</b> &nbsp;  <b style="text-decoration: line-through; color: red;">{{product.productActualPrice}} </b>
+                <div class="mt-3" *ngIf="priceReducerDerivation==true">                    
+                   <b>Rs. {{priceReducer}}</b> &nbsp;  <b style="text-decoration: line-through; color: red;">{{product.productActualPrice}} </b>
                 </div>
 
+                <div class="mt-3" *ngIf="priceReducerDerivation==false">                    
+                    <b>Rs. {{product.productDiscountedPrice}}</b> &nbsp;  <b style="text-decoration: line-through; color: red;">{{product.productActualPrice}} </b>
+                 </div>
+
+                <!-- <div class="mt-3" *ngIf="product.couponCode==null">                    
+                    <b>Rs. {{product.productDiscountedPrice}}</b> &nbsp;  <b style="text-decoration: line-through; color: red;">{{product.productActualPrice}} </b>
+                 </div> -->
+
                 <div class="mt-5 text-center">                    
-                    <button mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)">Buy Now</button>
+                    <button mat-raised-button color="warn" *ngIf="priceReducerDerivation==false" style="width: 200px;" (click)="buyProduct(product.productId,product.productDiscountedPrice)">Buy Now</button>
+                    <button mat-raised-button color="warn" *ngIf="priceReducerDerivation==true" style="width: 200px;" (click)="buyProduct(product.productId,priceReducer)">Buy Now</button>
+
+
                 
                     &nbsp;
                     <button mat-raised-button  style="width: 200px; color: gold;" (click)="addToCart(product.productId)">Add to Cart</button>
+                    &nbsp;
+                    <input type="text" value="Sydney" [(ngModel)]="product.couponCode" />
+<!-- <button (click)="myFunc(product.couponCode)" >Test</button> -->
+                    <button mat-raised-button  style="width: 200px; color: gold;" (click)="applyCouponCode(product.couponCode,product.productId)">Coupon Code</button>
                 </div>
             </div>
             

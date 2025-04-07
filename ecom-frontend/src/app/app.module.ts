@@ -39,6 +39,12 @@ import { OrderUpdateComponent } from './order-update/order-update.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';  
 import { MatSelectModule } from '@angular/material/select';  
 import { MyTransactionComponent } from './my-transaction/my-transaction.component';
+import { RegisterSellerComponent } from './register-seller/register-seller.component';
+import { SellerComponent } from './seller/seller.component';
+import { MyOrdersSellerComponent } from './my-order-seller/my-orders-seller.component';
+import { FavProductComponent } from './fav-product/fav-product.component';
+import { CustomerCareComponent } from './customer-care/customer-care.component';
+import { SupportComponent } from './support/support.component';
 
 
 
@@ -64,7 +70,13 @@ import { MyTransactionComponent } from './my-transaction/my-transaction.componen
     MyOrdersComponent,
     OrderDetaisComponent,
     OrderUpdateComponent,
-    MyTransactionComponent
+    MyTransactionComponent,
+    RegisterSellerComponent,
+    SellerComponent,
+    MyOrdersSellerComponent,
+    FavProductComponent,
+    CustomerCareComponent,
+    SupportComponent
   ],
   imports: [
     BrowserModule,

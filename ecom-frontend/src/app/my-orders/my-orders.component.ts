@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MyOrderDetails } from '../_model/order.model';
 import { ProductService } from '../_services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-my-orders',
@@ -9,7 +13,8 @@ import { ProductService } from '../_services/product.service';
 })
 export class MyOrdersComponent implements OnInit {
 
-  displayedColumns = ["Name", "Address" , "Contact No" , "Amount" , "Status"];
+  displayedColumns = ["Name", "Address" , "Contact No" , "Amount" , "Status", "Actions"];
+  showRefundButton = false;
 
   myOrderDetails: MyOrderDetails[] =[];
   constructor(private productService : ProductService) { }
@@ -22,11 +27,54 @@ export class MyOrdersComponent implements OnInit {
     this.productService.getMyOrders().subscribe(
       (resp: MyOrderDetails[]) => {
         console.log(resp);
+        //this.myOrderDetails.orderAmount;
         this.myOrderDetails = resp;
+        
       }, (err) => {
         console.log(err);
       }
     )
   }
+
+   deleteProduct(productId){
+      this.productService.deleteProduct(productId).subscribe(
+        (resp)=> {
+         // this.getAllProducts();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);}
+      );    
+    }
+
+    cancelOrder(orderId){
+      this.productService.cancelOrder(orderId).subscribe(
+        (resp)=> {
+          this.getOrderDetails();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);}
+      );    
+    }
+
+
+    refundOrder(orderId){
+      this.productService.refundOrder(orderId).subscribe(
+        (resp)=> {
+          this.getOrderDetails();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);}
+      );    
+    }
+
+    changeOrderStatus(orderId,status){
+      this.productService.changeOrderStatus(orderId,status).subscribe(
+        (resp)=> {
+         // this.getAllProducts();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);}
+      );    
+    }
 
 }

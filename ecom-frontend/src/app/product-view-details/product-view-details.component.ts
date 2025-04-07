@@ -12,6 +12,9 @@ export class ProductViewDetailsComponent implements OnInit {
 
   selectProductIndex = 0;
   product: Product;
+  discountedprice: "";
+  priceReducer: DoubleRange;
+  priceReducerDerivation : boolean=false;
 
   constructor(private activatedRoute: ActivatedRoute, private router : Router,
     private productService: ProductService) { }
@@ -26,9 +29,9 @@ export class ProductViewDetailsComponent implements OnInit {
     this.selectProductIndex=index;
   }
 
-  buyProduct(productId){
+  buyProduct(productId,priceReducerDerivation){
     this.router.navigate(['/buyProduct', {
-      isSingleProductCheckout: true, id: productId
+      isSingleProductCheckout: true,priceReducerDerivation: priceReducerDerivation, id: productId
     }]);
   }
 
@@ -41,6 +44,25 @@ export class ProductViewDetailsComponent implements OnInit {
       }
     )
 
+  }
+
+ 
+  applyCouponCode(couponCode,productId){
+    this.productService.couponCodeApply(couponCode,productId).subscribe(
+      (response) => {
+       // console.log(response);
+       if(response!='0.0'){
+        this.priceReducer = response;
+        this.priceReducerDerivation=true;
+        console.log("this.priceReducerDerivation"+this.priceReducerDerivation);
+       }
+       
+        console.log( this.priceReducer);
+       // this.discountedprice.=response.toString
+      },(error) => {
+        console.log(error)
+      }
+    )
   }
 
 }

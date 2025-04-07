@@ -1,16 +1,22 @@
 package com.ecom.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ecom.dao.ConfirmationTokenRepository;
 import com.ecom.dao.RoleDao;
 import com.ecom.dao.UserDao;
+import com.ecom.dao.UserRepository;
+import com.ecom.entity.ConfirmationToken;
 import com.ecom.entity.Role;
 import com.ecom.entity.User;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -23,6 +29,15 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    EmailService emailService;
+    
+    @Autowired
+    UserRepository userRepository;
 
     public void initRoleAndUser() {
 
@@ -57,17 +72,87 @@ public class UserService {
 //        userDao.save(user);
     }
 
-    public User registerNewUser(User user) {
-        Role role = roleDao.findById("User").get();
-        Set<Role> userRoles = new HashSet<>();
-        userRoles.add(role);
-        user.setRole(userRoles);
-        user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+    public String registerNewUser(User user) {
+//    	if (userRepository.existsByemailId(user.getEmailId())) {
+//    		return new String("Error: Email is already in use!");
+//    	}
+    	//    	if (userRepository.existsByUserEmail(user.getEmailId())) {
+    	//           // return ResponseEntity.badRequest().body("Error: Email is already in use!");
+    	//    		 return 
+    	//        }
+    	Role role = null;
+    	if(user.getSellerGst()!=null) {
+    		role = roleDao.findById("Seller").get();
+    	}
+    	
+    	System.out.println("user.getUserName()"+user.getUserName());
+    	if(user.getEmailId()!=null && user.getUserName().contains("@Support")) {
+    		
+    			role = roleDao.findById("Support").get();
+    		
+    	}
+    	else if(user.getEmailId()!=null && user.getUserName().contains("@Admin")) {
+    		
+    			role = roleDao.findById("Admin").get();
+    		
+    	}
+    	else {
+    		role = roleDao.findById("User").get();
+    	}
+    	Set<Role> userRoles = new HashSet<>();
+    	userRoles.add(role);
+    	user.setRole(userRoles);
+    	user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+    	user.setEmailId(user.getEmailId());
 
-        return userDao.save(user);
+    	ConfirmationToken confirmationToken = new ConfirmationToken(user);
+    	System.out.println("confirmationToken in Service"+confirmationToken.getConfirmationToken()+"Token Id : "+confirmationToken.getTokenId());
+    	userDao.save(user);
+    	//confirmationToken.setConfirmationToken( UUID.randomUUID().toString());
+    	confirmationTokenRepository.save(confirmationToken);
+    	
+    	
+
+    	
+
+    	SimpleMailMessage mailMessage = new SimpleMailMessage();
+    	mailMessage.setTo(user.getEmailId());
+    	mailMessage.setSubject("Complete Registration!");
+    	mailMessage.setText("To confirm your account, please click here : "
+    			+"http://localhost:9090/confirm-account?token="+confirmationToken.getConfirmationToken());
+    	emailService.sendEmail(mailMessage);
+    	return "Verify email by the link sent on your email address";
     }
 
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+    
+    public ResponseEntity<?> confirmEmail(String confirmationToken) {
+    	System.out.println("Email verification starts");
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+        if(token != null)
+        {
+        	if(token.getUserEntity().getEmailId()!=null) {
+            User user = userRepository.findByemailIdIgnoreCase(token.getUserEntity().getEmailId());
+            user.setEnabled(true);
+            userRepository.save(user);
+            return ResponseEntity.ok("Email verified successfully!");
+        	}
+        	else if(token.getUserEntity().getSellerEmailId()!=null) {
+
+                User user = userRepository.findByemailIdIgnoreCase(token.getUserEntity().getSellerEmailId());
+                user.setEnabled(true);
+                userRepository.save(user);
+                return ResponseEntity.ok("Email verified successfully!");
+            	
+        	}
+        	else {
+                return ResponseEntity.badRequest().body("Error: User created with no mail id ");
+
+        	}
+        }
+        return ResponseEntity.badRequest().body("Error: Couldn't verify email");
     }
 }

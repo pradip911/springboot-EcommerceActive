@@ -20,7 +20,11 @@ export class AddNewProductComponent implements OnInit {
     productDescription: "",
     productDiscountedPrice: 0,
     productActualPrice: 0,
-    productImages:[]
+    productQuantity: 0,
+    sellerName: "",
+    sellerEmailId: "",
+    productImages:[],
+    couponCode: ""
   }
 
   constructor(private productService: ProductService, 

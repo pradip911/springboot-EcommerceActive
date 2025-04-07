@@ -24,7 +24,22 @@ public class Product {
 	private String productDescription;
 	private Double productDiscountedPrice;
 	private Double productActualPrice;
+
+
+	private Integer productQuantity;
+	private String sellerName;
+	private String sellerEmailId;
+
+
 	
+	public String getSellerEmailId() {
+		return sellerEmailId;
+	}
+
+	public void setSellerEmailId(String sellerEmailId) {
+		this.sellerEmailId = sellerEmailId;
+	}
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
 	@JoinTable(name = "product_images",
 	joinColumns = {
@@ -43,6 +58,13 @@ public class Product {
 
 	public void setProductImages(Set<ImageModel> productImages) {
 		this.productImages = productImages;
+	}
+	public String getSellerName() {
+		return sellerName;
+	}
+
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
 	}
 
 	public Product() {
@@ -64,6 +86,14 @@ public class Product {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public Integer getProductQuantity() {
+		return productQuantity;
+	}
+
+	public void setProductQuantity(Integer productQuantity) {
+		this.productQuantity = productQuantity;
 	}
 
 	public String getProductDescription() {
@@ -91,13 +121,16 @@ public class Product {
 	}
 
 	public Product(Integer productId, String productName, String productDescription, Double productDiscountedPrice,
-			Double productActualPrice) {
+			Double productActualPrice,Integer productQuantity,String sellerName,String sellerEmailId) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.productDiscountedPrice = productDiscountedPrice;
 		this.productActualPrice = productActualPrice;
+		this.productQuantity=productQuantity;
+		this.sellerName=sellerName;
+		this.sellerEmailId=sellerEmailId;
 	}
 	
 	

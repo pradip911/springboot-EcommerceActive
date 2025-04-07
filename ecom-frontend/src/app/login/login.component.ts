@@ -25,11 +25,23 @@ export class LoginComponent implements OnInit {
         this.userAuthService.setToken(response.jwtToken);
 
         const role = response.user.role[0].roleName;
+        const message=response.message;
+        if(message ==='User is Active'){
         if (role === 'Admin') {
           this.router.navigate(['/admin']);
-        } else {
+        } else if(role === 'User'){
           this.router.navigate(['/user']);
         }
+        else if(role=='Support'){
+          this.router.navigate(['/support']);
+        }
+        else {
+          this.router.navigate(['/seller']);
+        }
+      }
+      else{
+        this.router.navigate(['/login']);
+      }
       },
       (error) => {
         console.log(error);

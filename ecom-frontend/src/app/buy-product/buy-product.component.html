@@ -70,7 +70,7 @@
                             </td>
 
                             <td>
-                                {{getCalculatedTotal(product.productId, product.productDiscountedPrice)}}
+                                {{getCalculatedTotal(product.productId, priceReducerDerivation)}}
                             </td>
                         </tr>
 
@@ -78,7 +78,14 @@
                             <td></td>
                             <td></td>
                             <td>Total</td>
-                            <td>{{getCalculatedGrandTotal()}}</td>
+                            <td>{{getCalculatedGrandTotal(priceReducerDerivation)}}</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Alert Message</td>
+                            <td>{{alertMessage}}</td>
                         </tr>
 
                     </tbody>

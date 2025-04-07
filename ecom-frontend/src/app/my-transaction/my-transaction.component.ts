@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyOrderDetails } from '../_model/order.model';
 import { ProductService } from '../_services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-orders',
@@ -9,7 +10,7 @@ import { ProductService } from '../_services/product.service';
 })
 export class MyTransactionComponent implements OnInit {
 
-  displayedColumns = ["Name", "Address" , "Contact No" , "Amount" , "Status"];
+  displayedColumns = ["Name", "Address" , "Contact No" , "Amount" , "Status" ,"Actions"];
 
   myOrderDetails: MyOrderDetails[] =[];
   constructor(private productService : ProductService) { }
@@ -28,5 +29,15 @@ export class MyTransactionComponent implements OnInit {
       }
     )
   }
+  downloadPdf(orderId,orderFullName,orderStatus){
+        this.productService.downloadPdf(orderId,orderFullName,orderStatus).subscribe(
+          (resp)=> {
+           // this.getAllProducts();
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);}
+        );    
+      }
+
 
 }

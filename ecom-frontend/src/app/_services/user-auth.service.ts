@@ -39,4 +39,12 @@ export class UserAuthService {
     const roles: any[] = this.getRoles();
     return roles[0].roleName === 'User';
   }
+  public isSeller() {
+    const roles: any[] = this.getRoles();
+    return roles[0].roleName === 'Seller';
+  }
+  public isSupport() {
+    const roles: any[] = this.getRoles();
+    return roles[0].roleName === 'Support';
+  }
 }

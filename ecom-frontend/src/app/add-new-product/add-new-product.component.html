@@ -29,6 +29,24 @@
                         [(ngModel)]="product.productDiscountedPrice"
                         name="productDiscountedPrice">
                     </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput placeholder="Quantity"
+                        [(ngModel)]="product.productQuantity"
+                        name="productQuantity">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>SellerName</mat-label>
+                        <input matInput placeholder="sellerName"
+                        [(ngModel)]="product.sellerName"
+                        name="sellerName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>SellerEmailId</mat-label>
+                        <input matInput placeholder="sellerEmailId"
+                        [(ngModel)]="product.sellerName"
+                        name="sellerName">
+                    </mat-form-field>
             
                     <div align="end">
                         <button mat-stroked-button color="primary" style="margin-right: 3px;">Clear</button>
